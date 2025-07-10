@@ -194,7 +194,7 @@ module Payday
       invoice.line_items.each do |line|
         table_data << [line.description,
                        (line.display_price || number_to_currency(line.price, invoice)),
-                       (line.display_quantity || BigDecimal.new(line.quantity.to_s).to_s("F")),
+                       (line.display_quantity || BigDecimal(line.quantity.to_s).to_s("F")),
                        number_to_currency(line.amount, invoice)]
       end
 
@@ -300,9 +300,11 @@ module Payday
 
     # Converts this number to a formatted currency string
     def self.number_to_currency(number, invoice)
+      Money.rounding_mode = BigDecimal::ROUND_HALF_EVEN # old default value
+      Money.locale_backend = :i18n                      # old default value
       currency = Money::Currency.wrap(invoice_or_default(invoice, :currency))
       number *= currency.subunit_to_unit
-      number = number.round unless Money.infinite_precision
+      number = number.round unless Money.default_infinite_precision
       Money.new(number, currency).format
     end
 
