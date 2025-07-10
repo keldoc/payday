@@ -3,6 +3,3 @@ Style/StringLiterals:
 
 Style/StringLiteralsInInterpolation:
   EnforcedStyle: double_quotes
-
-Style/AlignParameters:
-  EnforcedStyle: with_first_parameter

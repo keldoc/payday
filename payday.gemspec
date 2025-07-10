@@ -1,5 +1,6 @@
-# -*- encoding: utf-8 -*-
-$LOAD_PATH.push File.expand_path("../lib", __FILE__)
+# frozen_string_literal: true
+
+$LOAD_PATH.push File.expand_path("lib", __dir__)
 require "payday/version"
 
 Gem::Specification.new do |s|
@@ -16,12 +17,12 @@ Gem::Specification.new do |s|
     the near future.
   EOF
 
-  s.add_dependency("prawn", "~> 1.0.0")
-  s.add_dependency("money", "~> 6.13")
-  s.add_dependency("prawn-svg", "~> 0.15.0.0")
   s.add_dependency("i18n")
+  s.add_dependency("money", "~> 6.13")
+  s.add_dependency("prawn", "~> 1.0.0")
+  s.add_dependency("prawn-svg", "~> 0.15.0.0")
 
-  s.add_development_dependency("rspec", "~> 3.1.0")
+  s.add_development_dependency("rspec", "~> 3.8.0")
 
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
