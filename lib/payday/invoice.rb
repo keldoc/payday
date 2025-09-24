@@ -1,12 +1,15 @@
+# frozen_string_literal: true
+
 module Payday
   # Basically just an invoice. Stick a ton of line items in it, add some details, and then render it out!
   class Invoice
     include Payday::Invoiceable
 
-    attr_accessor :invoice_number, :bill_to, :ship_to, :notes, :line_items, :shipping_rate, :shipping_description,
-      :tax_rate, :tax_description, :due_at, :paid_at, :refunded_at, :currency, :invoice_details, :invoice_date
+    attr_accessor :invoice_number, :bill_to, :ship_to, :notes, :line_items, :shipping_description,
+                  :tax_description, :due_at, :paid_at, :refunded_at, :currency, :invoice_details, :invoice_date
+    attr_reader :shipping_rate, :tax_rate
 
-    def initialize(options =  {})
+    def initialize(options = {})
       self.invoice_number = options[:invoice_number] || nil
       self.bill_to = options[:bill_to] || nil
       self.ship_to = options[:ship_to] || nil
@@ -26,12 +29,20 @@ module Payday
 
     # The tax rate that we're applying, as a BigDecimal
     def tax_rate=(value)
-      @tax_rate = BigDecimal(value.to_s)
+      @tax_rate = coerce_decimal(value)
     end
 
     # Shipping rate
     def shipping_rate=(value)
-      @shipping_rate = BigDecimal(value.to_s)
+      @shipping_rate = coerce_decimal(value)
+    end
+
+    private
+
+    def coerce_decimal(value)
+      return value if value.is_a?(BigDecimal)
+
+      BigDecimal(value.to_s, exception: false) || BigDecimal('0')
     end
   end
 end
