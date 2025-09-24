@@ -29,23 +29,20 @@ module Payday
 
     # The tax rate that we're applying, as a BigDecimal
     def tax_rate=(value)
-      @tax_rate = decimal_or_zero(value)
+      @tax_rate = coerce_decimal(value)
     end
 
     # Shipping rate
     def shipping_rate=(value)
-      @shipping_rate = decimal_or_zero(value)
+      @shipping_rate = coerce_decimal(value)
     end
 
     private
 
-    def decimal_or_zero(value)
-      return BigDecimal('0') if value.nil?
+    def coerce_decimal(value)
       return value if value.is_a?(BigDecimal)
 
-      stringified = value.to_s
-      stringified = '0' if stringified.strip.empty?
-      BigDecimal(stringified)
+      BigDecimal(value.to_s, exception: false) || BigDecimal('0')
     end
   end
 end

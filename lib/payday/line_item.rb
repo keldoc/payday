@@ -36,9 +36,7 @@ module Payday
     def coerce_decimal(value)
       return value if value.is_a?(BigDecimal)
 
-      stringified = value.to_s
-      stringified = '0' if stringified.strip.empty?
-      BigDecimal(stringified)
+      BigDecimal(value.to_s, exception: false) || BigDecimal('0')
     end
   end
 end
