@@ -7,6 +7,14 @@ require "prawn/table"
 require "prawn-svg"
 require "money"
 
+if Money.respond_to?(:locale_backend=)
+  Money.locale_backend = :currency
+end
+
+if Money.respond_to?(:rounding_mode=)
+  Money.rounding_mode = BigDecimal::ROUND_HALF_EVEN
+end
+
 require_relative "payday/version"
 require_relative "payday/config"
 require_relative "payday/i18n"

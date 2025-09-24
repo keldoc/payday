@@ -20,12 +20,22 @@ module Payday
 
     # Sets the quantity of this {LineItem}
     def quantity=(value)
-      @quantity = BigDecimal(value.to_s)
+      @quantity = coerce_decimal(value)
     end
 
     # Sets the price for this {LineItem}
     def price=(value)
-      @price = BigDecimal(value.to_s)
+      @price = coerce_decimal(value)
+    end
+
+    private
+
+    def coerce_decimal(value)
+      return value if value.is_a?(BigDecimal)
+
+      stringified = value.to_s
+      stringified = "0" if stringified.strip.empty?
+      BigDecimal(stringified)
     end
   end
 end

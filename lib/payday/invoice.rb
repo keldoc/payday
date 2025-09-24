@@ -26,12 +26,23 @@ module Payday
 
     # The tax rate that we're applying, as a BigDecimal
     def tax_rate=(value)
-      @tax_rate = BigDecimal(value.to_s)
+      @tax_rate = decimal_or_zero(value)
     end
 
     # Shipping rate
     def shipping_rate=(value)
-      @shipping_rate = BigDecimal(value.to_s)
+      @shipping_rate = decimal_or_zero(value)
+    end
+
+    private
+
+    def decimal_or_zero(value)
+      return BigDecimal("0") if value.nil?
+      return value if value.is_a?(BigDecimal)
+
+      stringified = value.to_s
+      stringified = "0" if stringified.strip.empty?
+      BigDecimal(stringified)
     end
   end
 end

@@ -1,3 +1,9 @@
+require "tmpdir"
+require "fileutils"
+
+SPEC_TMP_DIR = File.join(Dir.tmpdir, "payday-spec")
+FileUtils.mkdir_p(SPEC_TMP_DIR)
+
 require_relative "../lib/payday"
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

@@ -17,15 +17,13 @@ Gem::Specification.new do |s|
     the near future.
   EOF
 
-  s.required_ruby_version = ">= 2.7.0"
+  s.add_dependency("prawn", "~> 2.4")
+  s.add_dependency("prawn-table", "~> 0.2.0")
+  s.add_dependency("money", "~> 6.13")
+  s.add_dependency("prawn-svg", "~> 0.32")
+  s.add_dependency("i18n")
 
-  s.add_dependency "i18n"
-  s.add_dependency "money", "~> 6.19"
-  s.add_dependency "prawn", "~> 2.3.0"
-  s.add_dependency "prawn-svg", "~> 0.31.0"
-  s.add_dependency "prawn-table", "0.2.2"
-
-  s.add_development_dependency "rspec", "~> 3.8.0"
+  s.add_development_dependency("rspec", "~> 3.1.0")
 
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
