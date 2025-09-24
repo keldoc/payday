@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = 'payday'
   s.version     = Payday::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.required_ruby_version = '>= 3.2'
+  s.required_ruby_version = '>= 2.7'
   s.authors     = ['Alan Johnson']
   s.email       = ['alan@commondream.net']
   s.homepage    = 'https://github.com/commondream/payday'
