@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Payday
   # Represents a line item in an invoice.
   #
@@ -7,15 +9,16 @@ module Payday
   class LineItem
     include LineItemable
 
-    attr_accessor :description, :quantity, :display_quantity, :display_price, :price
+    attr_accessor :description, :display_quantity, :display_price
+    attr_reader :quantity, :price
 
     # Initializes a new LineItem
     def initialize(options = {})
-      self.quantity = options[:quantity] || "1"
+      self.quantity = options[:quantity] || '1'
       self.display_quantity = options[:display_quantity]
       self.display_price = options[:display_price]
-      self.price = options[:price] || "0.00"
-      self.description = options[:description] || ""
+      self.price = options[:price] || '0.00'
+      self.description = options[:description] || ''
     end
 
     # Sets the quantity of this {LineItem}
@@ -34,7 +37,7 @@ module Payday
       return value if value.is_a?(BigDecimal)
 
       stringified = value.to_s
-      stringified = "0" if stringified.strip.empty?
+      stringified = '0' if stringified.strip.empty?
       BigDecimal(stringified)
     end
   end

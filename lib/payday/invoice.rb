@@ -1,12 +1,15 @@
+# frozen_string_literal: true
+
 module Payday
   # Basically just an invoice. Stick a ton of line items in it, add some details, and then render it out!
   class Invoice
     include Payday::Invoiceable
 
-    attr_accessor :invoice_number, :bill_to, :ship_to, :notes, :line_items, :shipping_rate, :shipping_description,
-      :tax_rate, :tax_description, :due_at, :paid_at, :refunded_at, :currency, :invoice_details, :invoice_date
+    attr_accessor :invoice_number, :bill_to, :ship_to, :notes, :line_items, :shipping_description,
+                  :tax_description, :due_at, :paid_at, :refunded_at, :currency, :invoice_details, :invoice_date
+    attr_reader :shipping_rate, :tax_rate
 
-    def initialize(options =  {})
+    def initialize(options = {})
       self.invoice_number = options[:invoice_number] || nil
       self.bill_to = options[:bill_to] || nil
       self.ship_to = options[:ship_to] || nil
@@ -37,11 +40,11 @@ module Payday
     private
 
     def decimal_or_zero(value)
-      return BigDecimal("0") if value.nil?
+      return BigDecimal('0') if value.nil?
       return value if value.is_a?(BigDecimal)
 
       stringified = value.to_s
-      stringified = "0" if stringified.strip.empty?
+      stringified = '0' if stringified.strip.empty?
       BigDecimal(stringified)
     end
   end
